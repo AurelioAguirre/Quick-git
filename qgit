@@ -4,6 +4,7 @@ function qgit_push() {
     local all_files=false
     local files=()
     local message=""
+    local branch=""
 
     # Parse arguments
     while [[ $# -gt 0 ]]; do
@@ -22,6 +23,11 @@ function qgit_push() {
             -m)
                 shift
                 message="$1"
+                shift
+                ;;
+            -o)
+                shift
+                branch="$1"
                 shift
                 ;;
             *)
@@ -51,7 +57,11 @@ function qgit_push() {
     git commit -m "$message"
 
     # Push
-    git push
+    if [[ -n "$branch" ]]; then
+        git push origin "$branch"
+    else
+        git push
+    fi
 }
 
 # Check if the command is 'push'
