@@ -1,0 +1,64 @@
+#!/bin/bash
+
+function qgit_push() {
+    local all_files=false
+    local files=()
+    local message=""
+
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -a)
+                all_files=true
+                shift
+                ;;
+            -f)
+                shift
+                while [[ $# -gt 0 && $1 != -* ]]; do
+                    files+=("$1")
+                    shift
+                done
+                ;;
+            -m)
+                shift
+                message="$1"
+                shift
+                ;;
+            *)
+                echo "Unknown option: $1"
+                return 1
+                ;;
+        esac
+    done
+
+    # Check if message is provided
+    if [[ -z "$message" ]]; then
+        echo "Error: Commit message is required. Use -m 'Your message'"
+        return 1
+    fi
+
+    # Add files
+    if $all_files; then
+        git add .
+    elif [[ ${#files[@]} -gt 0 ]]; then
+        git add "${files[@]}"
+    else
+        echo "Error: No files specified. Use -a for all files or -f to specify files."
+        return 1
+    fi
+
+    # Commit
+    git commit -m "$message"
+
+    # Push
+    git push
+}
+
+# Check if the command is 'push'
+if [[ $1 == "push" ]]; then
+    shift
+    qgit_push "$@"
+else
+    echo "Error: Only 'qgit push' is supported at this time."
+    exit 1
+fi
