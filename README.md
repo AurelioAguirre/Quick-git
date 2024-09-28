@@ -1,3 +1,4 @@
+```
 +---------------------------+
 |                           |
 |       Quick-Git (qgit)    |
@@ -51,21 +52,37 @@ Alternatively, you can use Git Bash on Windows and follow the Linux instructions
 
 ## Usage
 
-To use qgit, simply run:
+To use qgit, you have several options:
+
+1. Add all changes, commit, and push to the current branch:
 
 ```bash
 qgit push -a -m "Your commit message"
 ```
 
-This will add all changes, commit with the specified message, and push to the remote repository.
-
-To add specific files or use wildcards:
+2. Add specific files or use wildcards, commit, and push to the current branch:
 
 ```bash
 qgit push -f file1.py *.js -m "Your commit message"
 ```
 
-This will add the specified files (in this example, `file1.py` and all `.js` files), commit with the message, and push to the remote repository.
+3. Add all changes, commit, and push to a specific branch:
+
+```bash
+qgit push -a -o branch_name -m "Your commit message"
+```
+
+4. Add specific files, commit, and push to a specific branch:
+
+```bash
+qgit push -f file1.py *.js -o branch_name -m "Your commit message"
+```
+
+Flags:
+- `-a`: Add all changes (equivalent to `git add .`)
+- `-f`: Specify files to add (can use wildcards)
+- `-m`: Provide the commit message (required)
+- `-o`: Specify the branch to push to (optional)
 
 ## Contributing
 
@@ -73,5 +90,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the GPL3.0 License.
+This project is licensed under the MIT License.
 ```
